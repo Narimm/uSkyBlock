@@ -70,7 +70,7 @@ public class EntityMatch {
 
     private boolean matchFieldGetter(Entity entity, String key, Object value) {
         try {
-            Method method = entity.getClass().getMethod("get" + key, null);
+            Method method = entity.getClass().getMethod("get" + key, null, null);
             Object entityValue = method.invoke(entity);
             return matchValues(entityValue, value);
         } catch (InvocationTargetException | IllegalAccessException e) {

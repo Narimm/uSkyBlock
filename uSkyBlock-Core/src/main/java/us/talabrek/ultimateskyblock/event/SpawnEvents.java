@@ -21,6 +21,8 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SpawnEggMeta;
+import org.bukkit.material.MonsterEggs;
 import org.bukkit.material.SpawnEgg;
 import org.bukkit.metadata.FixedMetadataValue;
 import us.talabrek.ultimateskyblock.api.IslandInfo;
@@ -80,8 +82,8 @@ public class SpawnEvents implements Listener {
         if (player == null || event.isCancelled() || !plugin.isSkyWorld(player.getWorld())) {
             return; // Bail out, we don't care
         }
-        if (Animals.class.isAssignableFrom(event.getRightClicked().getType().getEntityClass()) && player.getItemInHand() != null) {
-            if (isFodder(event.getRightClicked(), player.getItemInHand())) {
+        if (Animals.class.isAssignableFrom(event.getRightClicked().getType().getEntityClass()) && player.getInventory().getItemInMainHand() != null) {
+            if (isFodder(event.getRightClicked(), player.getInventory().getItemInMainHand())) {
                 checkLimits(event, event.getRightClicked().getType(), player.getLocation());
                 if (event.isCancelled()) {
                     plugin.notifyPlayer(player, tr("\u00a7cYou have reached your spawn-limit for your island."));
@@ -108,13 +110,13 @@ public class SpawnEvents implements Listener {
             return;
         }
         ItemStack item = event.getItem();
-        if (RIGHT_CLICKS.contains(event.getAction()) && item != null && item.getType() == Material.MONSTER_EGG && item.getData() instanceof SpawnEgg) {
+        if (RIGHT_CLICKS.contains(event.getAction()) && item != null && item.getType() == Material.MONSTER_EGG && item.getItemMeta() instanceof SpawnEggMeta) {
             if (!plugin.playerIsOnIsland(player)) {
                 event.setCancelled(true);
                 plugin.notifyPlayer(player, tr("\u00a7eYou can only use spawn-eggs on your own island."));
                 return;
             }
-            SpawnEgg spawnEgg = (SpawnEgg) item.getData();
+            SpawnEggMeta spawnEgg = (SpawnEggMeta) item.getItemMeta();
             checkLimits(event, spawnEgg.getSpawnedType(), player.getLocation());
             if (event.isCancelled()) {
                 plugin.notifyPlayer(player, tr("\u00a7cYou have reached your spawn-limit for your island."));

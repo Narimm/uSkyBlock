@@ -93,8 +93,8 @@ public class PlayerEvents implements Listener {
         if (Settings.extras_obsidianToLava && plugin.playerIsOnIsland(player)
                 && plugin.isSkyWorld(player.getWorld())
                 && event.getAction() == Action.RIGHT_CLICK_BLOCK
-                && player.getItemInHand() != null
-                && player.getItemInHand().getType() == Material.BUCKET
+                && player.getInventory().getItemInMainHand() != null
+                && player.getInventory().getItemInMainHand().getType() == Material.BUCKET
                 && block != null
                 && block.getType() == Material.OBSIDIAN
                 && !testForObsidian(block)) {
@@ -103,7 +103,7 @@ public class PlayerEvents implements Listener {
                 player.sendMessage(tr("\u00a7eChanging your obsidian back into lava. Be careful!"));
                 inventory.remove(new ItemStack(Material.BUCKET, 1));
                 inventory.addItem(new ItemStack(Material.LAVA_BUCKET, 1));
-                player.updateInventory();
+               // player.updateInventory();
                 block.setType(Material.AIR);
                 event.setCancelled(true); // Don't execute the click anymore (since that would re-place the lava).
             } else {

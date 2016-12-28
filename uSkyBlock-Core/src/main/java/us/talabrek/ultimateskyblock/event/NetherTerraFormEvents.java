@@ -111,7 +111,7 @@ public class NetherTerraFormEvents implements Listener {
             return; // Not a block we terra-form on.
         }
         // TODO: 10/07/2016 - R4zorax: Handle dual-wielding (would break 1.8 compatibility)
-        ItemStack tool = event.getPlayer().getItemInHand();
+        ItemStack tool = event.getPlayer().getInventory().getItemInMainHand();
         if (tool == null || event.getBlock().getDrops(tool).isEmpty()) {
             return; // Only terra-form when stuff is mined correctly
         }
@@ -261,9 +261,8 @@ public class NetherTerraFormEvents implements Listener {
                 double p = RND.nextDouble();
                 if (p <= chanceWither) {
                     // Spawn Wither.
-                    Skeleton mob = (Skeleton) e.getLocation().getWorld().spawnEntity(e.getLocation(), EntityType.SKELETON);
-                    mob.setSkeletonType(Skeleton.SkeletonType.WITHER);
-                    mob.getEquipment().setItemInHand(new ItemStack(Material.STONE_SWORD, 1));
+                    Skeleton mob = (Skeleton) e.getLocation().getWorld().spawnEntity(e.getLocation(), EntityType.WITHER);
+                    mob.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_SWORD, 1));
                 } else if (p <= chanceWither+chanceBlaze) {
                     // Spawn Blaze
                     Blaze mob = (Blaze) e.getLocation().getWorld().spawnEntity(e.getLocation(), EntityType.BLAZE);

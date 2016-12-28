@@ -74,6 +74,21 @@
             </dependencies>
         </profile>
         <profile>
+            <id>1.11</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <dependencies>
+                <dependency> <!-- Bukkit implementation -->
+                    <groupId>org.spigotmc</groupId>
+                    <artifactId>spigot-api</artifactId>
+                    <version>1.11-R0.1-SNAPSHOT</version>
+                    <optional>true</optional>
+                    <scope>provided</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
             <id>1.9</id>
             <activation>
                 <activeByDefault>false</activeByDefault>
